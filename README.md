@@ -1,8 +1,8 @@
-# Github Actions Linter
+# GitHub Actions Linter
 
 ## References
 
-- [Super-Linter GitHub Repo](https://github.com/super-linter/super-linter)
+- [Super-Linter GitHub Repository](https://github.com/super-linter/super-linter)
 - [FreeCodeCamp Article](https://www.freecodecamp.org/news/github-super-linter/)
 
 ```yaml
