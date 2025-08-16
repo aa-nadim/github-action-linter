@@ -7,10 +7,15 @@ jobs:
   super-lint:
     name: Lint code base    # Job name
     runs-on: ubuntu-latest  # Runner: GitHub-hosted Linux VM
-
+    
+    # branch protection
+    permissions:
+      contents: read
+      statuses: write
+      
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2   # Pulls your repo code
+        uses: actions/checkout@v4   # Pulls your repo code
 
       - name: Run Super-Linter
         uses: github/super-linter@v5   # Runs GitHub's Super-Linter Action
