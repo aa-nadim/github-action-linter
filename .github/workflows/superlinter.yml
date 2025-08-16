@@ -1,17 +1,18 @@
-name: Super-Linter
+name: Super-Linter         # Workflow name (shows in Actions tab)
 
-on: push
+on: push                   # Trigger: runs on every push to any branch
 
 jobs:
   super-lint:
-    name: Lint code base
-    runs-on: ubuntu-latest
+    name: Lint code base    # Job name
+    runs-on: ubuntu-latest  # Runner: GitHub-hosted Linux VM
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2   # Pulls your repo code
 
       - name: Run Super-Linter
-        uses: github/super-linter@v4
+        uses: github/super-linter@v4   # Runs GitHub's Super-Linter Action
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
