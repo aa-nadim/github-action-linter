@@ -25,10 +25,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Token for access
           DEFAULT_BRANCH: main                     # Default branch
 
-          # Enable specific Python linters explicitly
-          VALIDATE_PYTHON_ISORT: true
-          VALIDATE_PYTHON_FLAKE8: true
-          VALIDATE_PYTHON_BLACK: true
-
           # Optionally, disable natural language validation for text files
           VALIDATE_NATURAL_LANGUAGE: false
