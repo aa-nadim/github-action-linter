@@ -1,34 +1,34 @@
-name: Super-Linter
+name: Super-Linter           # Workflow name shown in Actions tab
 
-on:
-  push:
+on:                         # When to run the action
+  push:                    # Run on push
     branches:
-      - main
-  pull_request:
+      - main               # main branch
+  pull_request:            # Run on pull requests targeting main
 
 jobs:
   super-lint:
     name: Lint code base
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # Using GitHub-hosted Linux runner
 
     permissions:
-      contents: read
-      statuses: write
+      contents: read      # Permissions needed for repo access
+      statuses: write     # Permissions for reporting back status
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4   # Checks out your repository code
 
       - name: Run Super-Linter
-        uses: github/super-linter@v5
+        uses: github/super-linter@v5 # Runs GitHub's Super-Linter
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Token for access
+          DEFAULT_BRANCH: main                     # Default branch
 
           # Enable specific Python linters explicitly
           VALIDATE_PYTHON_ISORT: true
           VALIDATE_PYTHON_FLAKE8: true
           VALIDATE_PYTHON_BLACK: true
 
-          # Optional: Disable natural language linting for text files
+          # Optionally, disable natural language validation for text files
           VALIDATE_NATURAL_LANGUAGE: false
