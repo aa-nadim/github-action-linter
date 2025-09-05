@@ -1,25 +1,53 @@
----
-name: Super-Linter         # Workflow name (shows in Actions tab)
+name: Super-Linter
 
-on: push                   # Trigger: runs on every push to any branch
+# Trigger the workflow on push and pull requests
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
 
 jobs:
   super-lint:
-    name: Lint code base    # Job name
-    runs-on: ubuntu-latest  # Runner: GitHub-hosted Linux VM
+    name: Lint code base
+    runs-on: ubuntu-latest
     
-    # branch protection
     permissions:
       contents: read
+      packages: read
+      # To report GitHub Actions status checks
       statuses: write
       
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4   # Pulls your repo code
+        uses: actions/checkout@v4
+        with:
+          # Full git history is needed to get a proper list of changed files
+          fetch-depth: 0
 
       - name: Run Super-Linter
-        uses: github/super-linter@v5   # Runs GitHub's Super-Linter Action
+        uses: super-linter/super-linter@v7.1.0  # Latest stable version
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_NATURAL_LANGUAGE: false  # Disables textlint
+          
+          # Python linting settings
+          VALIDATE_PYTHON_PYLINT: true
+          VALIDATE_PYTHON_FLAKE8: true
+          VALIDATE_PYTHON_BLACK: true
+          VALIDATE_PYTHON_ISORT: true
+          
+          # Disable other language validation to focus on Python
+          VALIDATE_BASH: false
+          VALIDATE_DOCKERFILE: false
+          VALIDATE_JSON: false
+          VALIDATE_MARKDOWN: false
+          VALIDATE_YAML: false
+          VALIDATE_XML: false
+          VALIDATE_NATURAL_LANGUAGE: false
+          
+          # Scan all files in the repository
+          VALIDATE_ALL_CODEBASE: true
+          
+          # Filter to only Python files
+          FILTER_REGEX_INCLUDE: .*\.(py)$
