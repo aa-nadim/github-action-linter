@@ -1,9 +1,13 @@
 def hello():
-    print("hi")
+    """Return a greeting message."""
+    return "Hello, World!"
 
 
 def bye():
-    print("bye")
+    """Return a goodbye message."""
+    return "Goodbye!"
 
 
-print(hello())
+if __name__ == "__main__":
+    print(hello())
+    print(bye())
