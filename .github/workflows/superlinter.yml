@@ -1,53 +1,28 @@
-name: Super-Linter
+name: Super-Linter           # Workflow name shown in Actions tab
 
-# Trigger the workflow on push and pull requests
-on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main]
+on:                         # When to run the action
+  push:                    # Run on push
+    branches:
+      - main               # main branch
+  pull_request:            # Run on pull requests targeting main
 
 jobs:
   super-lint:
     name: Lint code base
-    runs-on: ubuntu-latest
-    
+    runs-on: ubuntu-latest # Using GitHub-hosted Linux runner
+
     permissions:
-      contents: read
-      packages: read
-      # To report GitHub Actions status checks
-      statuses: write
-      
+      contents: read      # Permissions needed for repo access
+      statuses: write     # Permissions for reporting back status
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          # Full git history is needed to get a proper list of changed files
-          fetch-depth: 0
+        uses: actions/checkout@v4   # Checks out your repository code
 
       - name: Run Super-Linter
-        uses: super-linter/super-linter@v7.1.0  # Latest stable version
+        uses: github/super-linter@v5 # Runs GitHub's Super-Linter
         env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
-          # Python linting settings
-          VALIDATE_PYTHON_PYLINT: true
-          VALIDATE_PYTHON_FLAKE8: true
-          VALIDATE_PYTHON_BLACK: true
-          VALIDATE_PYTHON_ISORT: true
-          
-          # Disable other language validation to focus on Python
-          VALIDATE_BASH: false
-          VALIDATE_DOCKERFILE: false
-          VALIDATE_JSON: false
-          VALIDATE_MARKDOWN: false
-          VALIDATE_YAML: false
-          VALIDATE_XML: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Token for access
+          DEFAULT_BRANCH: main                     # Default branch
+          # Optionally, disable natural language validation for text files
           VALIDATE_NATURAL_LANGUAGE: false
-          
-          # Scan all files in the repository
-          VALIDATE_ALL_CODEBASE: true
-          
-          # Filter to only Python files
-          FILTER_REGEX_INCLUDE: .*\.(py)$
